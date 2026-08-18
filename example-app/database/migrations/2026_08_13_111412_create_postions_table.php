@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('postions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('employer_id')
+                ->constrained('employers')
+                ->cascadeOnDelete();
             $table->string('title');
             $table->float('salary');
             $table->timestamps();
