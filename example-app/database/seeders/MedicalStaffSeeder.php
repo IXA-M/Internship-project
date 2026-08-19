@@ -6,19 +6,12 @@ use App\Models\MedicalStaff;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class MedicalStaffSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(PostionSeeder::class);
-        $this->call(EmployerSeeder::class);
-        $this->call(MedicalStaffSeeder::class);
-
-        // Test Doctor
         $doctor = User::factory()->create([
-            'name' => 'Test Doctor',
-            'email' => 'doctor@example.com',
-            'password' => 'password',
+            'name' => 'Doctor User',
         ]);
 
         MedicalStaff::create([
@@ -26,11 +19,8 @@ class DatabaseSeeder extends Seeder
             'type' => 'doctor',
         ]);
 
-        // Test Nurse
         $nurse = User::factory()->create([
-            'name' => 'Test Nurse',
-            'email' => 'nurse@example.com',
-            'password' => 'password',
+            'name' => 'Nurse User',
         ]);
 
         MedicalStaff::create([

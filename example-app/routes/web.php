@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ForgetPasswordController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\MedicalStaffController;
 use App\Http\Controllers\RegisteredUsersController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionController;
 use App\Models\Postion;
 use Illuminate\Support\Facades\Route;
@@ -13,9 +15,13 @@ Route::get('/', function () {
     return view('home');
 });
 
+//  Route::resource('jobs',JobController::class)->only('')->middleware('auth');
+Route::get('medical-staff', [MedicalStaffController::class,'index']); 
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
+        Route::get('/medical-staff', [MedicalStaffController::class, 'index']);
+
 
     // Jobs
     Route::get('/jobs', [JobController::class, 'jobs']);
@@ -26,19 +32,25 @@ Route::middleware('auth')->group(function () {
         return view('jobs.show', ['job' => $job]);
     });
 
+    Route::get('profile', [ProfileController::class,'index']);
+    Route::put('profile', [ProfileController::class,'store']);
+
     Route::get('/jobs/create', [JobController::class, 'create']);
 
-    Route::get('/jobs/{id}/edit', [JobController::class, 'edit']);
+    Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
+    ->can('edit-job,job');
 
     Route::post('/jobs', [JobController::class, 'store']);
 
-    Route::put('/jobs/{id}', [JobController::class, 'update']);
+    Route::put('/jobs/{job}', [JobController::class, 'update'])
+    ->can('edit-job,job');;
 
-    Route::delete('/jobs/{id}', [JobController::class, 'delete']);
+    Route::delete('/jobs/{job}', [JobController::class, 'delete'])
+    ->can('edit-job,job');;
 
     // Logout
     Route::post('/logout', [SessionController::class, 'destroy']);
-});
+ });
 
 
 // Guest routes

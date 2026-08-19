@@ -6,19 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('employers', function (Blueprint $table) {
+        Schema::create('medical_staff', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->enum('type', ['doctor','nurse']);
             $table->foreignIdFor(User::class);
-            $table->string('email');
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('employers');
+        Schema::dropIfExists('medical_staff');
     }
 };

@@ -23,31 +23,33 @@
                     pays {{ $job->salary }} per year
                 </a>
 
-                <div class="mt-4 flex gap-3">
+                @can('edit-job', $job)
+                    <div class="mt-4 flex gap-3">
 
-                    <a
-                        href="/jobs/{{ $job->id }}/edit"
-                        class="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white"
-                    >
-                        Edit
-                    </a>
-
-                    <form
-                        method="POST"
-                        action="/jobs/{{ $job->id }}"
-                    >
-                        @csrf
-                        @method('DELETE')
-
-                        <button
-                            type="submit"
-                            class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white cursor-pointer "
+                        <a
+                            href="/jobs/{{ $job->id }}/edit"
+                            class="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white"
                         >
-                            Delete
-                        </button>
-                    </form>
+                            Edit
+                        </a>
 
-                </div>
+                        <form
+                            method="POST"
+                            action="/jobs/{{ $job->id }}"
+                        >
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white cursor-pointer "
+                            >
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+                @endcan
 
             </div>
 

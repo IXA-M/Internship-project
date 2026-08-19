@@ -18,4 +18,7 @@ class Employer extends Model
     {
         return $this->hasMany(Postion::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

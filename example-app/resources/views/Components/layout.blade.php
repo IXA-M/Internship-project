@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html class="h-full bg-gray-100">
 <head>
@@ -58,10 +57,10 @@
                 </div>
 
                 <!-- Right side -->
-                <div class="flex items-center">
+                <div class="flex items-center gap-4">
 
                     @guest
-                        <!-- Login and Register when NOT logged in -->
+
                         <div class="flex items-center space-x-3">
 
                             <a
@@ -79,11 +78,30 @@
                             </a>
 
                         </div>
+
                     @endguest
 
 
                     @auth
-                        <!-- Logout when logged in -->
+
+                        <!-- Profile Picture -->
+                        <a href="/profile" class="block">
+                            @if (auth()->user()->profile_picture)
+                                <img
+                                    src="{{ asset('storage/' . auth()->user()->profile_picture) }}"
+                                    alt="{{ auth()->user()->name }}"
+                                    class="size-10 rounded-full object-cover ring-2 ring-gray-600 hover:ring-indigo-500"
+                                >
+                            @else
+                                <img
+                                    src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=4f46e5&color=fff"
+                                    alt="{{ auth()->user()->name }}"
+                                    class="size-10 rounded-full object-cover ring-2 ring-gray-600 hover:ring-indigo-500"
+                                >
+                            @endif
+                        </a>
+
+                        <!-- Logout -->
                         <form method="POST" action="/logout">
                             @csrf
 
@@ -94,6 +112,7 @@
                                 Logout
                             </button>
                         </form>
+
                     @endauth
 
                 </div>
@@ -131,6 +150,7 @@
                 </a>
 
                 @guest
+
                     <a
                         href="/login"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white"
@@ -144,9 +164,34 @@
                     >
                         Register
                     </a>
+
                 @endguest
 
                 @auth
+
+                    <!-- Mobile Profile -->
+                    <a
+                        href="/profile"
+                        class="flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+                    >
+                        @if (auth()->user()->profile_picture)
+                            <img
+                                src="{{ asset('storage/' . auth()->user()->profile_picture) }}"
+                                alt="{{ auth()->user()->name }}"
+                                class="size-8 rounded-full object-cover"
+                            >
+                        @else
+                            <img
+                                src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=4f46e5&color=fff"
+                                alt="{{ auth()->user()->name }}"
+                                class="size-8 rounded-full object-cover"
+                            >
+                        @endif
+
+                        Profile
+                    </a>
+
+                    <!-- Mobile Logout -->
                     <form method="POST" action="/logout">
                         @csrf
 
@@ -157,6 +202,7 @@
                             Logout
                         </button>
                     </form>
+
                 @endauth
 
             </div>
@@ -184,4 +230,3 @@
 
 </body>
 </html>
-
